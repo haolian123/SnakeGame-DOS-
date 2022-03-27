@@ -1,41 +1,75 @@
 #pragma once
 #include<iostream>
-#include<windows.h>
-#include<conio.h>
 #include<deque>
+#include<Windows.h>
 #include<ctime>
-#include<stdexcept>
-#pragma warning (disable:4996)
+#include<conio.h>
 using namespace std;
-
 class SnakeGame
 {
 public:
 	struct Snake
 	{
-		char image;
-		int x, y; //坐标
+		char Image;//蛇的图案
+		short x, y;//坐标
 	};
 	SnakeGame();
-	void PrintMap();//控制光标移动
-	void GoXY(short x, short y);//移动光标
-	void HideCursor();//隐藏光标
-	void InitSnake();//初始化蛇身
-	bool WrongLocation();//蛇身是否与食物出现位置冲突
-	void CreateFood();//随机产生食物
+
+	~SnakeGame();
+
+	//打印地图
+	void CreatMap();
+
+	//生成食物
+	void CreatFood();
+
+	//生成蛇身
+	void CreatSnake();
+
+	//打印蛇身
 	void PrintSnake();
-	void ClearSnake(Snake& tail);
-	void JudgeCrash();//是否输
-	void FoodEaten();
-	void UserInput();//监控用户键盘输入
+
+	//清除蛇尾
+	void CleanTail(Snake &Tail);
+
+	//判断食物是否在蛇身
+	bool JudgeIsFoodOnSnake();
+
+	//游戏结束条件
+	bool JudgeIsDead();
+
+	//判断是否键入
+	void UserInput();
+
+	//获取坐标
+	void Go(short x, short y);
+
+	//如果吃到食物
+	void EatenFood();
+
+	//开始游戏
+	void StartGame();
+
+	//隐藏光标
+	void HideCursor();
+
+	//主菜单
+	int ShowMenu();
+	//操作说明
+	void Intruduce();
+	//显示分数
+	void ShowScore();
+	//地图的大小
+	short Wid, Len;
 private:
-	enum MapSize { Height = 40, Width = 120 };
+	
 	HANDLE hOut;
-	COORD pos;
-	char Dir;//方向
-	bool Beg, EatFood;
+	COORD Pos;
+	bool IsEatFood, Beg;
 	double Speed;
+	
 	deque<Snake>snake;
-	int Food_X, Food_Y;
+	int FoodX, FoodY;
 	int Score;
+	char Dir;//方向
 };
